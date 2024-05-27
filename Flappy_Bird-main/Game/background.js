@@ -1,12 +1,12 @@
+
 class Background {
     constructor(element) {
-        this.element = element;
-        this.rect = this.element.getBoundingClientRect();
+        this.element = element; // rappresenta lo sfondo
+        this.rect = this.element.getBoundingClientRect(); // Ottiene il poligono che delimita lo sfondo 
     }
 
-    // serve per ottenere la distanza dal bordo inferiore dell'elemento al bordo superiore
     getBottom() {
-        return this.rect.bottom;
+        return this.rect.bottom; // Restituisce la Y del bordo inferiore dell'elemento
     }
 }
 
