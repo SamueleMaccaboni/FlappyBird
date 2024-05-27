@@ -1,117 +1,79 @@
 class Bird {
-    constructor(element, imgElement, gravity) {
-        this.element = element;
-        this.imgElement = imgElement;
-        this.gravity = gravity;
-        this.dy = 0; // velocità verticale
-        this.init();
+    constructor(canvas, gravity) {
+        this.canvas = canvas; 
+        this.ctx = canvas.getContext('2d'); 
+        this.img = new Image(); 
+        this.img.src = 'images/Bird.png'; 
+        this.x = 50; // posizione orizzontale dell'uccello
+        this.y = canvas.height / 2; // posizione verticale dell'uccello
+        this.gravity = gravity; // gravità dell'uccello
+        this.dy = 0; // velocità verticale dell'uccello
+        this.width = 34; 
+        this.height = 24; 
+        this.init(); 
     }
 
     init() {
         // nasconde l'immagine dell'uccello all'inizio
-        this.imgElement.style.display = 'none';
+        //this.imgElement.style.display = 'none';
 
         // quando viene premuto il tasto, vienne aggiunto un evento
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowUp') {
                 
                 // cambia l'immagine dell'uccello e imposta la velocità verso l'alto
-                this.imgElement.src = 'images/Bird-2.png';
+                //this.imgElement.src = 'images/Bird-2.png';
                 this.dy = -7.6;
             }
         });
 
         // quando viene rilasciato il tasto, vienne aggiunto un evento
-        document.addEventListener('keyup', (e) => {
-            if (e.key === 'ArrowUp') {
+       // document.addEventListener('keyup', (e) => {
+            //if (e.key === 'ArrowUp') {
                 // ripristina l'immagine originale dell'uccello
-                this.imgElement.src = 'images/Bird.png';
-            }
-        });
+                //this.imgElement.src = 'images/Bird.png';
+            //}
+        //});
     }
 
+    // applica la gravità all'uccello e controlla se tocca il terreno
     applyGravity() {
-        // aumenta la velocità verso il basso con la gravità
         this.dy += this.gravity;
-        
-        // aggiorna la posizione verticale dell'uccello
-        this.element.style.top = this.element.offsetTop + this.dy + 'px';
+        this.y += this.dy;
+    
+        // verifica se l'uccello ha toccato il terreno
+        if (this.y + this.height >= this.canvas.height) {
+            this.endGame();
+            return;
+        }
+    }
+
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
     reset() {
-        // resetta la posizione dell'uccello e lo rende visibile
-        this.element.style.top = '40vh';
-        this.imgElement.style.display = 'block';
+        this.y = this.canvas.height / 2; 
         this.dy = 0; 
     }
 
-    hide() {
-        // nasconde l'immagine dell'uccello quando serve
-        this.imgElement.style.display = 'none';
-    }
+    // controlla la collisione dell'uccello con un tubo
+    checkCollision(pipe) {
+        // calcola ile collisioni dell'uccello e del tubo
+        const birdRect = {
+            left: this.x,
+            right: this.x + this.width,
+            top: this.y,
+            bottom: this.y + this.height
+        };
 
-    getRect() {
-        // restituisce il rettangolo di delimitazione dell'uccello per capire quando bisogna renderlo invisibile
-        return this.element.getBoundingClientRect();
-    }
-}
+        const pipeRect = pipe.getRect();
 
-export default Bird;
-class Bird {
-    constructor(element, imgElement, gravity) {
-        this.element = element;
-        this.imgElement = imgElement;
-        this.gravity = gravity;
-        this.dy = 0; // velocità verticale
-        this.init();
-    }
-
-    init() {
-        // nasconde l'immagine dell'uccello all'inizio
-        this.imgElement.style.display = 'none';
-
-        // quando viene premuto il tasto, vienne aggiunto un evento
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowUp') {
-                
-                // cambia l'immagine dell'uccello e imposta la velocità verso l'alto
-                this.imgElement.src = 'images/Bird-2.png';
-                this.dy = -7.6;
-            }
-        });
-
-        // quando viene rilasciato il tasto, vienne aggiunto un evento
-        document.addEventListener('keyup', (e) => {
-            if (e.key === 'ArrowUp') {
-                // ripristina l'immagine originale dell'uccello
-                this.imgElement.src = 'images/Bird.png';
-            }
-        });
-    }
-
-    applyGravity() {
-        // aumenta la velocità verso il basso con la gravità
-        this.dy += this.gravity;
-        
-        // aggiorna la posizione verticale dell'uccello
-        this.element.style.top = this.element.offsetTop + this.dy + 'px';
-    }
-
-    reset() {
-        // resetta la posizione dell'uccello e lo rende visibile
-        this.element.style.top = '40vh';
-        this.imgElement.style.display = 'block';
-        this.dy = 0; 
-    }
-
-    hide() {
-        // nasconde l'immagine dell'uccello quando serve
-        this.imgElement.style.display = 'none';
-    }
-
-    getRect() {
-        // restituisce il rettangolo di delimitazione dell'uccello per capire quando bisogna renderlo invisibile
-        return this.element.getBoundingClientRect();
+        // verifica se i poligoni che delimitano i tubi e l'uccello si sovrappongono
+        return birdRect.left < pipeRect.right &&
+               birdRect.right > pipeRect.left &&
+               birdRect.top < pipeRect.bottom &&
+               birdRect.bottom > pipeRect.top;
     }
 }
 
