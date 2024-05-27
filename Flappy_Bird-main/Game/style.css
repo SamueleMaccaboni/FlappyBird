@@ -1,4 +1,4 @@
-/* Resetta margini, padding e box-sizing per tutti gli elementi */
+/* resetta margini, padding e box-sizing per tutti gli elementi */
 * {
 	margin: 0;
 	padding: 0;
@@ -6,48 +6,48 @@
 	font-family: Copporplate, fantasy;
 }
 
-/* Sfondo del gioco */
+/* sfondo del gioco */
 .background {
-	height: 100vh;
-	width: 100vw;
-	background: url('images/Bg1.png') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    height: 100vh; 
+    width: 100vw; 
+    background: url('images/Bg1.png') no-repeat center center fixed; 
+    background-size: cover; /* copre completamente il div con l'immagine di sfondo */
 }
 
-/* Uccello */
+
+/* uccello */
 .bird {
-	height: 120px; /* Altezza aumentata */
-	width: 160px;  /* Larghezza aumentata */
+	height: 120px; 
+	width: 160px;  
 	position: fixed;
 	top: 40vh;
-	left: 20vw;  /* Posiziona l'uccello inizialmente */
+	left: 20vw;  /* posiziona l'uccello iniziale */
 	z-index: 100;
 }
 
 .bird-img {
-    width: 100%; /* L'immagine si adatta alla dimensione del contenitore */
+    width: 100%; /* l'immagine si adatta alla dimensione del rettangolo che lo delimita */
     height: auto;
     display: block;
 }
 
-/* Tubi */
+/* stile base per tutti i tubi */
 .pipe_sprite {
-    position: fixed;
-    height: 70vh;
-    width: 6vw;
-    border: none; 
+    position: fixed; /* posiziona i tubi in modo fisso rispetto alla finestra */
+    height: 70vh; 
+    width: 6vw; 
+    border: none; /* non applica bordi al tubo */
 }
 
+/* stile per il tubo superiore */
 .pipe_top {
-    top: 0; 
-    background-image: url('images/pipe2.png');
-    background-size: cover; 
-    background-repeat: no-repeat; 
+    top: 0; /* Posiziona il tubo nella parte superiore della finestra */
+    background-image: url('images/pipe2.png'); 
+    background-size: cover; /* ridimensiona l'immagine di sfondo per coprire completamente l'area del tubo */
+    background-repeat: no-repeat; /* impedisce la ripetizione dell'immagine di sfondo */
 }
 
+/* stile per il tubo inferiore */
 .pipe_bottom {
     bottom: 0; 
     background-image: url('images/pipe1.png'); 
@@ -55,61 +55,60 @@
     background-repeat: no-repeat;
 }
 
-/* Messaggio */
+
+/* messaggio */
 .message {
-	position: absolute;
-	z-index: 10;
-	color: black;
-	top: 30%;
-	left: 50%;
-	font-size: 4em;
-	transform: translate(-50%, -50%);
-	text-align: center;
+    position: absolute;
+    z-index: 10; 
+    color: black; 
+    top: 30%; 
+    left: 50%; 
+    font-size: 4em; 
+    transform: translate(-50%, -50%); 
+    text-align: center; 
 }
 
 .messageStyle {
-	background: white;
-	padding: 30px;
-	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	border-radius: 5%;
+    background: white; 
+    padding: 30px; 
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; /* Aggiunge un'ombra al box */
+    border-radius: 5%; /* arrotonda gli angoli del box */
 }
 
 /* Punteggio */
 .score {
-	position: fixed;
-	z-index: 10;
-	height: 10vh;
-	font-size: 10vh;
-	font-weight: 100;
-	color: white;
-	-webkit-text-stroke-width: 2px;
-    -webkit-text-stroke-color: black;
-	top: 0;
-	left: 0;
-	margin: 10px;
-	font-family: Arial, Helvetica, sans-serif;
+    position: fixed; 
+    z-index: 10; 
+    height: 10vh;
+    font-size: 10vh; 
+    font-weight: 100; 
+    color: white; 
+    top: 0; 
+    left: 0; 
+    margin: 10px; 
+    font-family: Arial, Helvetica, sans-serif; 
 }
 
 .score_val {
-	color: gold;
-	font-weight: bold;
+    color: gold; 
+    font-weight: bold; 
 }
 
 /* Media Query per schermi piccoli */
 @media only screen and (max-width: 1080px) {
     .message {
-		font-size: 50px;
-		top: 50%;
-		white-space: nowrap;
-	}
-	.score {
-		font-size: 8vh;
-	}
-	.bird {
-		width: 140px; /* Ridimensiona l'uccello per schermi piccoli */
-		height: 105px;
-	}
-	.pipe_sprite {
-		width: 14vw;
-	}
+        font-size: 50px; 
+        top: 50%; 
+        white-space: nowrap; /* impedisce al testo di andare a capo */
+    }
+    .score {
+        font-size: 8vh; 
+    }
+    .bird {
+        width: 140px; 
+        height: 105px; 
+    }
+    .pipe_sprite {
+        width: 14vw;
+    }
 }
