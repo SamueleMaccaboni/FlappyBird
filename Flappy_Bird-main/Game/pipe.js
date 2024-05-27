@@ -1,26 +1,46 @@
 class Pipe {
-    // inizializza un nuovo tubo con la classe CSS, la posizione top e left
-    constructor(className, top, left) {
-        this.element = document.createElement('div'); // crea un nuovo elemento div per rappresentare il tubo
-        this.element.className = className; // applica lo stile CSS nell'elemento
-        this.element.style.top = top; // imposta la posizione verticale
-        this.element.style.left = left; // imposta la posizione orizzontale
-        this.element.increase_score = '1'; // aumenta il punteggio quando l'uccello passa il tubo
+    constructor(canvas, position, y, moveSpeed) {
+        this.canvas = canvas; 
+        this.ctx = canvas.getContext('2d'); 
+        this.img = new Image(); 
+        this.img.src = position === 'top' ? 'images/pipe2.png' : 'images/pipe1.png';
+        this.x = canvas.width; // posizione orizzontale del tubo
+        this.y = y; // posizione verticale del tubo
+        this.moveSpeed = moveSpeed; // velocità del tubo
+        this.width = 52; 
+        this.height = 320; 
+        this.position = position; // posizione del tubo (superiore o inferiore)
+        this.scored = false; // indica se i tubi sono stati superati dall'uccello
     }
 
-    // muove il tubo verso sinistra
-    move(moveSpeed) {
-        this.element.style.left = this.element.offsetLeft - moveSpeed + 'px'; // aggiorna la posizione orizzontale 
+    // sposta il tubo verso sinistra
+    move() {
+        this.x -= this.moveSpeed; // sottrae la velocità dalla posizione orizzontale del tubo
     }
 
-    remove() {
-        this.element.remove(); // rimuove l'elemento div del tubo 
+    draw(ctx) {
+        // disegna l'immagine del tubo sulla posizione corretta del canvas 
+        ctx.drawImage(this.img, this.x, this.position === 'top' ? this.y - this.height : this.y, this.width, this.height);
     }
 
-    // ottiene le collisioni del tubo
+    // verifica se il tubo è uscito dal canvas
+    isOutOfCanvas() {
+        return this.x + this.width < 0; // restituisce true se il tubo è completamente uscito dal canvas
+    }
+
+    // verifica se l'uccello ha superato i tubi
+    isPassed(bird) {
+        return this.x + this.width < bird.x; // restituisce true se l'uccello è oltre la posizione orizzontale del tubo
+    }
+
+    // ottiene i limiti della collisione del tubo
     getRect() {
-        return this.element.getBoundingClientRect(); /* restituisce un oggetto che rappresenta le dimensioni e la posizione di un elemento 
-                                                        rispetto alla finestra */
+        return {
+            left: this.x, // x del lato sinistro della collisione
+            right: this.x + this.width, // x del lato destro della collisione
+            top: this.position === 'top' ? this.y - this.height : this.y, // y del lato superiore della collisione
+            bottom: this.position === 'top' ? this.y : this.y + this.height // y del lato inferiore della collsione
+        };
     }
 }
 
