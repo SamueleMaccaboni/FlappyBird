@@ -6,7 +6,7 @@ class Background {
     }
 
     getBottom() {
-        return this.rect.bottom; // Restituisce la Y del bordo inferiore dell'elemento
+        return this.rect.bottom; // restituisce la Y del bordo inferiore dell'elemento
     }
 }
 
